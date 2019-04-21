@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Classes</title>
+</head>
+<body>
+<a href="add-class">Add Class</a>
+<hr>
+{% if message == "There are no classes" %}
+     <p> {{message}} </p>
+{% else %}
+<table>
+	<tr><td>Class List</td></tr>
+	{% for item in message %}
+		<tr>
+			<td><a href="{{url_for('describe_collection', collectionId=item)}}">{{item}}</a></td> 
+		</tr>
+	{% endfor %}
+</table>
+{% endif %}
+</body>
+</html>

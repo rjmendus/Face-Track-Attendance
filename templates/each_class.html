@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{className}}</title>
+</head>
+<body>
+	{{className}}
+	<br>
+	<a href="{{url_for('add_face', collectionId=className)}}">Add face</a>
+	<br>
+	<a href="{{url_for('delete_collection', collectionId=className)}}">Delete Class</a>
+	<hr>
+	<table>
+		<tr>
+			<td>Collection Arn</td> <td>{{data['CollectionARN']}}</td>
+		</tr><tr>
+			<td>Face Count</td> <td>{{data['FaceCount']}}</td>
+		</tr><tr>
+			<td>Face Model Version</td> <td>{{data['FaceModelVersion']}}</td>
+		</tr><tr>
+			<td>Timestamp</td> <td>{{data['CreationTimestamp']}}</td>
+		</tr>
+	</table>
+	<hr>
+	<table>
+	<tr><td>Class Face List</td><td>Face Id</td></tr>
+	{% for item in faces_list %}
+		<tr>
+			<td>{{item['ExternalImageId']}}</td>
+			<td>{{item['FaceId']}}</td> 
+			<td><a href="{{url_for('delete_face', collectionId=className, faceId=item['FaceId'])}}">Delete face</a></td>
+		</tr>
+	{% endfor %}
+</table>
+
+</body>
+</html>
