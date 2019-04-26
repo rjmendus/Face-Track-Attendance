@@ -16,10 +16,21 @@ def home():
 	response=aws_client.list_collections()
 	print(response)
 	if response['CollectionIds'] == []:
-		message = "There are no classes"
-		return render_template('home.html', message=message)
-	message = response['CollectionIds']
-	return render_template('home.html',message=message)
+		classes = "There are no classes"
+		selectedClass = 'Null'
+		return render_template('index.html', classes=classes, selectedClass=selectedClass)
+	classes = response['CollectionIds']
+
+	
+	selectedClass = request.args.get('selectedClass', None)
+	if selectedClass == None:
+		selectedClass = classes[0]
+
+	faces_response=aws_client.list_faces(CollectionId=selectedClass,MaxResults=123)
+	faces_list = faces_response['Faces']
+	if not faces_list:
+		faces_list = 'Null'
+	return render_template('index.html', classes=classes, selectedClass=selectedClass, faces_list=faces_list)
 
 @app.route('/add-class', methods=['GET', 'POST'])
 def add_collection():
@@ -76,7 +87,7 @@ def delete_face(collectionId,faceId):
 	faces = []
 	faces.append(faceId)
 	response=aws_client.delete_faces(CollectionId=collectionId, FaceIds=faces)
-	return redirect(url_for('describe_collection', collectionId=collectionId))
+	return redirect(url_for('home', selectedClass=collectionId))
 
 def allowed_file(filename):
     return '.' in filename and \
