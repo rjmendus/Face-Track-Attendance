@@ -30,6 +30,11 @@ def home():
 	faces_list = faces_response['Faces']
 	if not faces_list:
 		faces_list = 'Null'
+	else:
+		count = 1
+		for item in faces_list:
+			item['Id'] = count
+			count = count + 1
 	return render_template('index.html', classes=classes, selectedClass=selectedClass, faces_list=faces_list)
 
 @app.route('/add-class', methods=['GET', 'POST'])
@@ -38,26 +43,14 @@ def add_collection():
 		collectionId = request.form['name']
 		response=aws_client.create_collection(CollectionId=collectionId)
 		return redirect(url_for('home'))
-	return render_template('add_class.html')
-
-@app.route('/class/<collectionId>')
-def describe_collection(collectionId):
-	print(collectionId)
-	response=aws_client.describe_collection(CollectionId=collectionId)
-	faces_response=aws_client.list_faces(CollectionId=collectionId,MaxResults=123)
-	faces_list = faces_response['Faces']
-	if not faces_list:
-		print("Collection is empty")
-	else:
-		print(faces_list)
-	return render_template('each_class.html', className=collectionId, data=response, faces_list=faces_list)
+	return render_template('addclass.html')
 
 @app.route('/class/<collectionId>/delete')
 def delete_collection(collectionId):
 	response=aws_client.delete_collection(CollectionId=collectionId)
 	return redirect(url_for('home'))
 
-@app.route('/class/<collectionId>/add-face', methods=['GET', 'POST'])
+@app.route('/<collectionId>/add-face', methods=['GET', 'POST'])
 def add_face(collectionId):
 	if request.method == 'POST':
 		# check if the post request has the file part
@@ -79,8 +72,8 @@ def add_face(collectionId):
 				decoded_image = base64.b64decode(encoded_string)
 				aws_client.index_faces(CollectionId=collectionId, Image={'Bytes': decoded_image},
 					ExternalImageId=request.form['name'])
-				return redirect(url_for('describe_collection', collectionId=collectionId))
-	return render_template('add_face.html', className=collectionId)
+				return redirect(url_for('home', selectedClass=collectionId))
+	return render_template('addface.html', className=collectionId)
 
 @app.route('/class/<collectionId>/delete-face/<faceId>')
 def delete_face(collectionId,faceId):
