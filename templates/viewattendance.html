@@ -28,7 +28,7 @@
         <a class="navbar-brand brand-logo" href="home">
           <img src="../static/assets/images/logo.svg" alt="logo" />
         </a>
-        <a class="navbar-brand brand-logo-mini" href="{{url_for('home')}}">
+        <a class="navbar-brand brand-logo-mini" href="{{ url_for('home') }}">
           <img src="../static/assets/images/logo-mini.svg" alt="logo" />
         </a>
       </div>
@@ -126,41 +126,39 @@
                         <thead>
                           <tr>
                             <th>
-                              #
+                              Date
                             </th>
                             <th>
-                              Class Name
+                              Hour
                             </th>
                             <th>
-                              Action
+                              Students Present
                             </th>
                           </tr>
                         </thead>
-                        <!-- <tbody>
-                          {% if faces_list != "Null" %}
-                            {% set count = 1 %}
-                            {% for item in faces_list %}
+                        <tbody>
+                          {% if data != "Null" %}
+                            {% for item in data %}
                               <tr>
                                 <td class="font-weight-medium">
-                                  {{item['Id']}}
+                                  {{item['Date']}}
                                 </td>
                                 <td>
-                                  {{item['ExternalImageId']}}
+                                  {{item['Hour']}}
                                 </td>
                                 <td>
-                                  <a style="color:white" class="btn btn-danger btn-block d-md-block" href="{{url_for('delete_face', collectionId=selectedClass, faceId=item['FaceId'])}}">Delete Face
-                                  </a>
+                                  {{item['List']}}
                                 </td>
                               </tr>
                             {% endfor %}
                           {% else %}
                             <tr>
                                 <td class="font-weight-medium">
-                                  No faces are added to this class
+                                  No attendance marked for this class.
                                 </td>
                             </tr>
                           {% endif %}
-                        </tbody> -->
+                        </tbody>
                       </table>
                     <!-- {% endif %} -->
                   </div>

@@ -2,6 +2,8 @@ from flask import Flask, flash, request, redirect, url_for, render_template
 import boto3
 import os
 import base64
+import requests
+import json
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = '/home/ubuntu/Face-Track/Uploads'
@@ -74,6 +76,22 @@ def add_face(collectionId):
 					ExternalImageId=request.form['name'])
 				return redirect(url_for('home', selectedClass=collectionId))
 	return render_template('addface.html', className=collectionId)
+
+@app.route('/<collectionId>/attendance')
+def view_attendance(collectionId):
+	url = 'https://m93y8bihcj.execute-api.ap-south-1.amazonaws.com/Dev/getattendance'
+	r = requests.post(url, json={"Class": collectionId})
+	print(r.text)
+	response = json.loads(r.text)
+	data = response['Attendance']
+	if not data:
+		data = 'Null'
+	else:
+		for item in data:
+			item['Date'] = item['TimeStamp'].split()[0]
+			item['Hour'] = item['TimeStamp'].split()[1]
+			item['List'] = ', '.join(item['StudentList'])
+	return render_template('viewattendance.html', data=data, selectedClass=collectionId)
 
 @app.route('/class/<collectionId>/delete-face/<faceId>')
 def delete_face(collectionId,faceId):
