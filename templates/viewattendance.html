@@ -67,12 +67,12 @@
                   </div>
                 </div>
               </div>
-              <a style="color:white" class="btn btn-success btn-block" href="add-class">Add Class
+              <!-- <a style="color:white" class="btn btn-success btn-block" href="add-class">Add Class
                 <i class="mdi mdi-plus"></i>
-              </a>
+              </a> -->
             </div>
           </li>
-          {% if classes == "There are no classes" %}
+          <!-- {% if classes == "There are no classes" %}
             <li class="nav-item">
               <span class="menu-title nav-link">There are no classes</span>
             </li>
@@ -85,7 +85,7 @@
               </a>
             </li>
             {% endfor %}
-          {% endif %}
+          {% endif %} -->
           <!-- <li class="nav-item">
             <a class="nav-link" href="index.html">
               <i class="menu-icon fa fa-users"></i>
@@ -98,7 +98,7 @@
       <div class="main-panel">
         <div class="content-wrapper">
         <div class="row purchace-popup">
-            <div class="col-12">
+            <!-- <div class="col-12">
               <span class="d-block d-md-flex align-items-center">
                   <a class="btn btn-success btn-block d-md-block" href="{{url_for('add_face', collectionId=selectedClass)}}">Add Face
                     </a>
@@ -111,17 +111,17 @@
                     </a>
                 <i class="mdi mdi-close popup-dismiss d-none d-md-block"></i>
               </span>
-            </div>
+            </div> -->
           </div>
           <div class="row">
             <div class="col-lg-12 grid-margin">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Face Details - {{selectedClass}}</h4>
+                  <h4 class="card-title">Attendance Details - {{selectedClass}}</h4>
                   <div class="table-responsive">
-                    {% if classes == "There are no classes" %}
+                    <!-- {% if classes == "There are no classes" %}
                       <h3 class="card-title">Please add atleast one class</h3>
-                    {% else %}
+                    {% else %} -->
                       <table class="table table-hover">
                         <thead>
                           <tr>
@@ -136,7 +136,7 @@
                             </th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <!-- <tbody>
                           {% if faces_list != "Null" %}
                             {% set count = 1 %}
                             {% for item in faces_list %}
@@ -160,9 +160,9 @@
                                 </td>
                             </tr>
                           {% endif %}
-                        </tbody>
+                        </tbody> -->
                       </table>
-                    {% endif %}
+                    <!-- {% endif %} -->
                   </div>
                 </div>
               </div>
